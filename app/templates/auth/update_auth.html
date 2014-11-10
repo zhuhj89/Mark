@@ -1,0 +1,56 @@
+{% extends "base.html" %}
+{% from "macros/_forms.html" import render_errors %}
+
+{% block content %}
+  <h2>更新权限</h2>
+
+{% if form %}
+ <form method="POST" action="">
+  {{form.hidden_tag()}}
+  <table class="table table-condensed">
+      <tr>
+          <td class="text-right">{{ form.auth_name.label }}<font color="red">*</font></td>
+          <td>{{form.auth_name()}} {{ render_errors(form.auth_name)}}</td>
+          <td></td>
+      </tr>
+      <tr>
+          <td class="text-right"> {{ form.auth_url.label }}<font color="red">*</font></td>
+          <td>{{form.auth_url()}} {{ render_errors(form.auth_url)}}</td>
+          <td></td>
+      </tr>
+      <tr>
+          <td class="text-right"> {{ form.auth_desc.label }}</td>
+          <td>{{form.auth_desc()}}  {{ render_errors(form.auth_desc)}}</td>
+          <td></td>
+      </tr>
+     <tr>
+          <td class="text-right"> 权限代码</td>
+          <td>
+            {% if update_auth %}
+              {{update_auth.auth_code}}
+            {% endif %}
+          </td>
+          <td></td>
+      </tr>
+      <tr>
+          <td class="text-right">创建人</td>
+          <td> {{update_auth.creator_obj.username}} </td>
+          <td></td>
+      </tr>
+      <tr>
+          <td class="text-right">创建时间</td>
+          <td> {{update_auth.create_date}} </td>
+          <td></td>
+      </tr>
+      <tr> 
+          <td></td>
+          <td>
+              <input class="btn btn-info" type="submit" value="更新" >
+              <input class="btn btn-info" type="reset" value="重置" />
+          </td>
+          <td> </td>
+      </tr>
+  </table>
+  </form>
+{% endif %}
+{% endblock %}

@@ -1,0 +1,42 @@
+{% extends "base.html" %}
+
+{% block content %}
+   <div class="panel panel-default">
+   <div class="panel-heading">
+      <h3 class="panel-title">审核结果</h3>
+   </div>
+
+   <table class="table table-bordered table-hover">
+
+      <tr>
+          <td>域名</td>
+          <td colspan="5">{{record.domain_name}}</td></tr>
+      <tr>
+          <td>审核时间</td>
+          <td colspan="2">{{record.audit_time}}</td>
+          <td>审核员</td>
+          <td colspan="2">{{record.auditer}}</td></tr>
+       <tr>
+           <td>审核结果</td>
+          <td colspan="5">
+          {% if record.status == '1'  %}
+            未审核
+          {% elif record.status == '2'  %}
+            审核通过
+          {% elif record.status == '3'  %}
+            审核未通过
+         {% endif %}
+          </td>
+       </tr>
+       <tr>
+           <td>审核失败原因</td>
+           <td colspan="5">
+               <p>
+                   {{record.audit_desc}}
+               </p>
+           </td>
+       </tr>
+   </table>
+   </div>
+            <a href="{{ url_for('audit.query', id=record.id) }}" class="btn btn-info btn-lg btn-block ">返回</a>
+{% endblock%}

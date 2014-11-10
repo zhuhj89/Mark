@@ -1,0 +1,39 @@
+{% extends "base.html" %}
+{% block title %}Niot - MarkPanel{% endblock %}
+{% from "macros/_forms.html" import render_errors %}
+
+<style type="text/css">
+
+</style>
+{% block content %}
+<div class="content">
+    <h1>用户登陆</h1>
+      <form class="form-horizontal" method="POST" action="">
+        {{form.hidden_tag()}}
+
+      <div class="form-group">
+        <label class="col-sm-2 control-label">{{ form.username.label }}</label>
+        <div class="col-sm-10">
+            {{ form.username }}
+            <span class="help-inline">{{ render_errors(form.username) }}</span>
+        </div>
+      </div>
+
+      <div class="form-group">
+        <label class="col-sm-2 control-label">{{ form.password.label }}</label>
+        <div class="col-sm-10">
+            {{ form.password }}
+            <span class="help-inline">{{ render_errors(form.username) }}</span>
+        </div>
+      </div>
+
+    <div class="form-group">
+        <div class="col-sm-offset-2 col-sm-10">
+        <button type="submit" class="btn btn-primary">登陆</button>&nbsp;&nbsp;
+            {{form.remember_me}}{{ form.remember_me.label }}
+        </div>
+    </div>
+
+   </form>
+</div>
+{% endblock %}

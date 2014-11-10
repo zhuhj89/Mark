@@ -1,0 +1,19 @@
+{% macro paginate(page_obj, page_url) %}
+{% if page_obj.pages > 1 %}
+<div class="pagination">
+
+{% if page_obj.has_prev %}
+<span class="previous">
+    <a href="{{ page_url(page_obj.page - 1) }}">上一页</a>
+</span> 
+{% endif %}
+第{{ page_obj.page }}页/共{{ page_obj.pages }}页
+{% if page_obj.has_next %}
+<span class="next">
+    <a href="{{ page_url(page_obj.page + 1) }}">下一页</a>
+</span>
+{% endif %}
+
+</div>
+{% endif %}
+{% endmacro %}

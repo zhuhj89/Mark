@@ -1,0 +1,86 @@
+<!DOCTYPE html>
+<html>
+<head lang="en">
+    <meta charset="UTF-8">
+    <title></title>
+    <script>
+        function msg(){
+
+            if(confirm('确认提交审核？')){
+                window.event.returnValue = true;
+                document.form.submit();
+            }else{
+
+                window.event.returnValue = false;
+            }
+        }
+        function resetBtn(fm){
+            fm.reset();
+            return false;
+        }
+
+    </script>
+</head>
+<body>
+<form name="form" method="post" action="/audit/confirm" >
+<input name="record_id" type="hidden" value="{{record.id}}" />
+<div style="text-align:center">
+
+<table cellspacing="0" cellpadding="0" bordercolor="#000000" bordercolordark="#FFFFFF" bgcolor="#FFFFFF" width="75%" border=1 style="margin:auto">
+    <td colspan="4" align="center"><h2>审核记录信息</h2></td>
+    <tr>
+        <td width="130">审核域名</td>
+        <td>{{record.domain_name}}</td>
+         <td width="130">注册商用户名</td>
+         <td>{{record.name}}</td>
+
+     </tr>
+{% for image in images %}
+    <tr>
+     <td>
+    {% if image.category=='03'%}
+        营业执照
+    {% elif image.category == '04'%}
+        条码证书
+    {% endif %}
+    </td>
+    <td>
+    <img src="{{ url_for('static', filename='images/' ~ image.file_path, _external=true) }}"  width="800px" height="500px">
+     </td>
+     <td>
+         信息审核
+     </td>
+     <td width="200">
+
+    {% if image.category=='03'%}
+        {% set check_dict = check['bussiness_lic'] %}
+    {% elif image.category == '04'%}
+         {% set check_dict = check['code_certific'] %}
+    {% endif %}
+    {% for key, value in check_dict.iteritems()%}
+         {{value[0].decode('utf8')}} <br>
+        是<input type="radio" name="{{key}}" value="1"  />
+        否<input type="radio" name="{{key}}" value="0" checked="checked"/>
+    {% endfor %}
+     </td>
+
+    </tr>
+{% endfor %}
+      <tr>
+        <td align="center">审核意见</td>
+        <td colspan="3">
+           <textarea rows="5" cols="148" name="suggest"></textarea>
+        </td>
+    </tr>
+  <tr>
+    <td>提交</td>
+    <td colspan="3" align="center" >
+        <input name="imgbtn" type="image" src="{{ url_for('static', filename='images/submit.jpg') }}" width="80" height="30" border="0" onClick="msg();">
+        <input name="imgBtn" type="image" src="{{ url_for('static', filename='images/reset.jpg') }}" width="80" height="30" border="0" onClick="return resetBtn(this.form);">
+    </td>
+</tr>
+</table>
+</div>
+ </form>
+</body>
+</html>

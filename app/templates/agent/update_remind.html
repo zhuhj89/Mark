@@ -1,0 +1,28 @@
+{% extends "base.html" %}
+{% from "macros/_forms.html" import render_errors %}
+{% block content %}
+  <h2>修改余额提醒值</h2>
+  <form method="POST" action=''>
+  {{form.hidden_tag()}}
+    <table class="table table-condensed">
+      <tr>
+          <td class="text-right">{{ form.agent_name.label }}</td>
+          <td>{{ form.agent_name(readonly="readonly") }}</td>
+          <td>{{ render_errors(form.agent_name) }}</td>
+      </tr>
+      <tr>
+          <td class="text-right">{{ form.balance_remind.label }}</td>
+          <td>{{ form.balance_remind }}</td>
+          <td>{{ render_errors(form.balance_remind) }}</td>
+      </tr>
+      <tr>
+          <td></td>
+          <td>
+            <input type="submit" value="完成" class="btn btn-primary" />
+            <input type="reset" value="重置" class="btn btn-info" />
+          </td>
+          <td></td>
+      </tr>
+    </table>
+  </form>
+{% endblock %}

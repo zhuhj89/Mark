@@ -1,0 +1,82 @@
+{% extends "base.html" %}
+{% from "macros/_page.html" import paginate %}
+
+{% block scripts %}
+<script  language="javascript" type="text/javascript">
+    function show_reason(obj_id){
+        div_obj =document.getElementById(obj_id);
+        if (div_obj.style.display == 'none'){
+            div_obj.style.display  = 'block';
+        }else{
+            div_obj.style.display  = 'none';
+        }
+    }
+</script>
+{% endblock %}
+
+{% block content %}
+
+   <div>
+   <form method="GET" action='/audit/query'>
+      域名：<input type="text" name="domain_name" value="{{domain_name}}" />
+           <input type="hidden" name="type" value="{{type}}">
+    <input type="submit" value="查询" />
+    </form>
+   </div>
+
+
+
+   <table class="table table-bordered table-hover">
+      <caption>
+          <h3>我的域名</h3>
+      </caption>
+      <thead>
+         <tr>
+            <th align="center">审核域名</th>
+            <th>注册商用户名</th>
+            <th>审核状态</th>
+            <th>申请时间</th>
+            <th>操作</th>
+         </tr>
+      </thead>
+     <tbody>
+     {% if records.items %}
+     {% for record in records.items %}
+        <tr>
+         <td>{{ record.domain_name }}</td>
+         <td>{{ record.name }}</td>
+         {% if record.status == '1'  %}
+            <td>未审核</td>
+         {% elif record.status == '2'  %}
+            <td>审核通过</td>
+         {% elif record.status == '3'  %}
+            <td>审核未通过</td>
+         {% endif %}
+        <td>{{ record.create_time }}</td>
+        {% if record.status == '1'  %}
+            <td><a href="{{ url_for('audit.confirm', id=record.id) }}">审核</a></td>
+        {% elif record.status == '2'  %}
+            <td></td>
+        {% elif record.status == '3'  %}
+          <td>
+             <a href="{{ url_for('audit.record_detail', id=record.id) }}">查看</a>
+          </td>
+        {% endif %}
+      </tr>
+  {%endfor%}
+  {% endif %}
+</tbody>
+</table>
+   <div class="row">
+   <div class="col-md-5">
+   <a href="{{ url_for('audit.query') }}" class="btn btn-default btn-xs">全部</a>
+   <a href="{{ url_for('audit.query', type='1') }}" class="btn btn-default btn-xs">未审核</a>
+   <a href="{{ url_for('audit.query', type='2') }}" class="btn btn-default btn-xs">审核通过</a>
+   <a href="{{ url_for('audit.query', type='3') }}" class="btn btn-default btn-xs">审核未通过</a>
+       {{ paginate(records, page_url) }}
+   </div>
+   <div class="col-md-4">
+
+   </div>
+   </div>
+{% endblock %}
