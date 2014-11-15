@@ -1,0 +1,71 @@
+{% extends "base.html" %}
+{% from "macros/_page.html" import paginate %}
+{% block scripts %}
+    <script>
+        $(function(){
+            $('#sdate,#edate').datetimepicker({
+                language: 'zh-CN',
+                autoclose: 1,
+                todayBtn: 1,
+                pickerPosition: "bottom-left",
+                minuteStep: 5,
+                format: 'yyyy-mm-dd',
+                minView: 'month'
+          });
+        });
+    </script>
+
+{% endblock %}
+{% block content %}
+  <h2>明细查询</h2>
+
+  <form method="GET" action="">
+    <table class="table table-condensed">
+    <tr>
+        <td class="text-right">注册商</td>
+        <td><input type="text" name="agent_name" value="{{ agent_name }}" /></td>
+        <td></td>
+    </tr>
+    <tr>
+        <td class="text-right">开始日期</td>
+        <td>
+            <input type="text" name="sdate" id="sdate" value="{{ sdate }}">
+        </td>
+        <td></td>
+    </tr>
+    <tr>
+        <td class="text-right">结束日期</td>
+        <td><input type="text" name="edate" id='edate' value="{{ edate }}" /></td>
+        <td></td>
+    </tr>
+      <tr>
+        <td></td>
+        <td><input type="submit" value="查询"></td>
+        <td></td>
+      </tr>
+    </table>
+  </form>
+
+  <h2>消费记录列表</h2>
+  <table class="table table-condensed">
+    <tr>
+        <td>域名</td>
+        <td>付费金额</td>
+        <td>到期时间</td>
+        <td>扣费时间</td>
+    </tr>
+  {% if page_obj and page_obj.items %}
+  {% for item in page_obj.items %}
+    <tr>
+        <td>{{ item.domain_name }}</td>
+        <td>{{ item.amount }}</td>
+        <td>{{ item.due_date }}</td>
+        <td>{{ item.create_date }}</td>
+    </tr>
+  {% endfor %}
+  <tr>
+        <td colspan="4">{{ paginate(page_obj, page_url) }}</td>
+      </tr>
+  {% endif %}
+  </table>
+{% endblock %}

@@ -1,0 +1,43 @@
+{% extends "base.html" %}
+{% from "macros/_page.html" import paginate %}
+{% block content %}
+  <h2>审核记录列表</h2>
+   <form method="GET" action='/audit/list'>
+      注册商：<input type="text" name="agent_name" value="{{ agent_name }}" />
+    <input type="submit" value="查询" />
+  </form>
+  <table class="table table-striped">
+    <tr>
+        <td align="center">审核域名</td>
+        <td align="center">注册商用户名</td>
+        <td align="center">审核状态</td>
+        <td align="center">申请时间</td>
+        <td align="center">详细信息</td>
+    </tr>
+      {% if records.items %}
+        {% for record in records.items %}
+      <tr>
+        <td>{{ record.domain_name }}</td>
+        <td>{{ record.name }}</td>
+        <td>
+        {% if record.status == '1'  %}
+            未审核
+        {% elif record.status == '2'  %}
+            审核通过
+        {% elif record.status == '3'  %}
+            审核未通过
+        {% endif %}
+        </td>
+        <td>{{ record.create_time }}</td>
+
+        <td><a href="{{ url_for('audit.record_detail', id=record.id) }}">详细</a></td>
+
+    </tr>
+    {% endfor %}
+      <tr>
+         <td colspan="12">{{ paginate(records, page_url) }}</td>
+      </tr>
+    {% endif %}
+
+  </table>
+{% endblock %}

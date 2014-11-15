@@ -1,0 +1,15 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project version="4">
+  <component name="PublishConfigData" serverName="cnnic">
+    <serverData>
+      <paths name="cnnic">
+        <serverdata>
+          <mappings>
+            <mapping deploy="/home/ops/work/20141113/Mark" local="$PROJECT_DIR$" web="/" />
+          </mappings>
+        </serverdata>
+      </paths>
+    </serverData>
+  </component>
+</project>
+

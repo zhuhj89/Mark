@@ -1,0 +1,66 @@
+{% extends "base.html" %}
+{% from "macros/_forms.html" import render_errors %}
+{% block content %}
+<div class="content">
+    <div class="page-header">
+        <h3>我的信息</h3>
+    </div>
+
+    <form class="form-horizontal" action="" method="POST">
+        {{form.hidden_tag()}}
+        <div class="form-group">
+            <label class="col-sm-2 control-label">账号</label>
+            <div class="col-sm-10 form-control-static">
+                {{ user.username }}
+            </div>
+        </div>
+        <div class="form-group">
+            <label class="col-sm-2 control-label">{{ form.name.label }}</label>
+            <div class="col-sm-10 form-control-static">
+                {{ form.name }}
+                <span class="help-inline">{{ render_errors(form.name) }}</span>
+            </div>
+        </div>
+        <div class="form-group">
+            <label class="col-sm-2 control-label">{{ form.email.label }}</label>
+            <div class="col-sm-10">
+                {{ form.email }}
+                <span class="help-inline">{{ render_errors(form.email) }}</span>
+            </div>
+        </div>
+        <div class="form-group">
+            <label class="col-sm-2 control-label">{{ form.phone.label }}</label>
+            <div class="col-sm-10">
+                {{ form.phone }}
+                <span class="help-inline">{{ render_errors(form.phone) }}</span>
+            </div>
+        </div>
+        <div class="form-group">
+            <label class="col-sm-2 control-label">创建人</label>
+            <div class="col-sm-10 form-control-static">
+                {{ user.creator_obj.username }}
+            </div>
+        </div>
+        <div class="form-group">
+            <label class="col-sm-2 control-label">创建时间</label>
+            <div class="col-sm-10 form-control-static">
+                {{ user.create_date }}
+            </div>
+        </div>
+        <div class="form-group">
+            <label class="col-sm-2 control-label">创建时间</label>
+            <div class="col-sm-10 form-control-static">
+                {{ user.role.role_name }}
+            </div>
+        </div>
+       <div class="form-group" style="width: 800px">
+        <div class="col-sm-offset-2 col-sm-1 ">
+            <button type="submit" class="btn btn-primary">提交修改</button>
+        </div>
+        <div class="col-sm-offset-1 col-sm-1">
+            <a href="{{ url_for('site.base') }}" class="btn btn-default">返回主页</a>
+        </div>
+      </div>
+     </form>
+ </div>
+{% endblock %}

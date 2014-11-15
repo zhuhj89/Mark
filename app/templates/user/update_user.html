@@ -1,0 +1,80 @@
+{% extends "base.html" %}
+{% from "macros/_forms.html" import render_errors %}
+
+{% block content %}
+  <h2>更新用户</h2>
+
+  <form method="POST" action="">
+  {{form.hidden_tag()}}
+  <table class="table table-condensed">
+      <tr>
+          <td class="text-right">账号 </td>
+          <td>{{ update_user.username }}</td>
+          <td></td>
+      </tr>
+      <tr>
+          <td class="text-right">{{ form.name.label }}<font color="red">*</font></td>
+          <td>{{form.name()}} {{ render_errors(form.name)}}</td>
+          <td></td>
+      </tr>
+      <tr>
+          <td class="text-right">{{ form.email.label }}<font color="red">*</font></td>
+          <td> {{form.email()}} {{ render_errors(form.email)}}</td>
+          <td></td>
+      </tr>
+      <tr>
+          <td class="text-right">{{ form.phone.label }}<font color="red">*</font></td>
+          <td> {{form.phone()}} {{ render_errors(form.phone)}}</td>
+          <td></td>
+      </tr>
+     <tr>
+          <td class="text-right"> <label for="role_id">角色</label> <font color="red">*</font></td>
+          <td>
+              <select id="role_id" name="role_id">
+                   {% for role in roles %}
+                        {% if role.id == update_user.role_id %}
+                            <option value="{{ role.id }}" selected>{{ role.role_name }}</option>
+                        {% else %}
+                            <option value="{{ role.id }}">{{ role.role_name }}</option>
+                        {% endif %}
+                   {% endfor %}
+              </select>
+          </td>
+          <td></td>
+      </tr>
+      <tr>
+          <td class="text-right"> {{ form.status.label }}</td>
+          <td>
+              {% for subfield in form.status %} 
+                {{ subfield }}
+                {{ subfield.label }}
+              {% endfor %}
+              {{render_errors(form.status)}}
+          </td>
+          <td></td>
+      </tr>
+      {% if update_user %}
+          <tr>
+              <td class="text-right">创建人</td>
+              <td>{{update_user.creator_obj.username}}</td>
+              <td></td>
+          </tr>
+          <tr>
+              <td class="text-right">创建时间</td>
+              <td> {{update_user.create_date}}</td>
+              <td></td>
+          </tr>
+      {% endif %}
+      <tr>
+          <td></td>
+          <td>
+              <input class="btn btn-info" type="submit" value="添加" >
+              <input class="btn btn-info" type="reset" value="重置" />
+          </td>
+          <td> </td>
+      </tr>
+  </table>
+  </form>
+
+
+{% endblock %}

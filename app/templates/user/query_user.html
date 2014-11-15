@@ -1,0 +1,47 @@
+{% extends "base.html" %}
+{% from "macros/_page.html" import paginate %}
+
+{% block content %}
+  <h2>用户列表</h2>
+
+<table class="table table-striped">
+    <tr>
+        <td>序号</td>
+        <td>账号</td>
+        <td>使用者名称</td>
+        <td>邮箱</td>
+        <td>电话</td>
+        <td>创建者</td>
+        <td>创建时间</td>
+        <td>角色</td>
+        <td>状态</td>
+        <td>操作</td>
+    </tr>
+
+    {% if user_page_obj %}
+    {% for user in user_page_obj.items %}
+    <tr>
+        <td>{{loop.index}}</td>
+        <td>{{user.username}}</td>
+        <td>{{user.name}}</td>
+        <td>{{user.email}}</td>
+        <td>{{user.phone}}</td>
+        <td>{{user.creator_obj.username}}</td>
+        <td>{{user.create_date}}</td>
+        <td>{{user.role.role_name}}</td>
+        <td>
+            {% if user.status == 0 %}
+                停用
+            {% else %}
+                正常
+            {% endif %}
+        </td>
+        <td>
+            <a href="/users/updateuser/{{user.id}}">编辑</a> | <a href="/users/deleteuser/{{user.id}}">删除</a>
+        </td>
+    </tr>
+    {% endfor%}
+    {% endif %}
+</table>
+{{ paginate(user_page_obj, user_page_url)}}
+{% endblock %}

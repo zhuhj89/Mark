@@ -1,0 +1,74 @@
+{% extends "base.html" %}
+{% from "macros/_page.html" import paginate %}
+
+{% block content %}
+  <h2>注册商列表</h2>
+   <form method="GET" action='/agent/list'>
+      注册商：<input type="text" name="agent_name" value="{{ agent_name }}" />
+    <input type="submit" value="查询" />
+  </form>
+  <table class="table table-condensed">
+    <tr>
+        <td>注册商用户名</td>
+        <td>注册商公司名</td>
+        <td>邮箱</td>
+        <td>联系电话</td>
+        <td>余额</td>
+        <td>网址</td>
+        <td>信息</td>
+        <td>启用/禁用</td>
+        <td>余额提醒</td>
+        <td>域名价格</td>
+        <td>充值</td>
+        <td>扣费</td>
+    </tr>
+  {% if page_obj.items %}
+  {% for agent in page_obj.items %}
+    <tr>
+        <td>{{ agent.agent_name }}</td>
+        {% if agent.comp_name|length <= 8 %}
+        <td>{{ agent.comp_name }}</td>
+        {% else%}
+         <td>{{ agent.comp_name[0:8] }}  ...</td>
+        {% endif %}
+        <td>{{ agent.email }}</td>
+        <td>{{ agent.phone }}</td>
+        <td>{{ agent.balance }}</td>
+        {% if agent.comp_name|length <= 8 %}
+        <td>{{ agent.url }}</td>
+        {% else%}
+         <td>{{ agent.url[0:8] }}  ...</td>
+        {% endif %}
+
+        <td><a href="{{ url_for('agent.update_agent', id=agent.id) }}">修改</a></td>
+        <td>
+            {% if agent.status == 1 %}
+                已启用点此<a href="{{ url_for('agent.update_using', id=agent.id, status='off') }}">禁用</a>
+            {% elif agent.status == 2 %}
+                已禁用点此<a href="{{ url_for('agent.update_using', id=agent.id, status='on') }}">启用</a>
+            {% endif %}
+        </td>
+        <td>{{agent.balance_remind }}<a href="{{ url_for('agent.update_remind', id=agent.id) }}">修改</a></td>
+        <td>
+            {% for domain_price in domain_prices %}
+                {% if domain_price.id == agent.domain_price_id %}
+                    {{ domain_price.price }}
+                {% endif %}
+            {% endfor %}
+            <a href="{{ url_for('agent.update_price', id=agent.id) }}">修改</a></td>
+        <td><a href="{{ url_for('agent.charge', id=agent.id) }}">充值</a></td>
+        <td><a href="{{ url_for('agent.payment', id=agent.id) }}">扣费</a></td>
+    </tr>
+  {% endfor %}
+      <tr>
+
+        {% if agent_name %}
+          <td colspan="12"><a href="{{ url_for('agent.query_agent_list') }}" class="btn btn-default">返回</a></td>
+        {% else%}
+            <td colspan="12">{{ paginate(page_obj, page_url) }}</td>
+        {% endif %}
+      </tr>
+  {% endif %}
+  </table>
+
+{% endblock %}

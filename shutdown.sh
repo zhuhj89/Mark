@@ -1,0 +1,1 @@
+kill -9 $(ps  -ef|grep run:app|awk '$3==1 {print $2}')

@@ -1,0 +1,61 @@
+{% extends "base.html" %}
+{% block scripts %}
+    <script>
+        $(function(){
+            $('#sdate,#edate').datetimepicker({
+                language: 'zh-CN',
+                autoclose: 1,
+                todayBtn: 1,
+                pickerPosition: "bottom-left",
+                minuteStep: 5,
+                format: 'yyyy-mm-dd',
+                minView: 'month'
+          });
+        });
+    </script>
+
+{% endblock %}
+{% block content %}
+  <h2>账单查询</h2>
+
+  <form method="GET" action="">
+  <table class="table table-striped">
+    <tr>
+        <td class="text-right">注册商</td>
+        <td><input type="text" name="agent_name" value="{{ agent_name }}" /></td>
+        <td></td>
+    </tr>
+    <tr>
+        <td class="text-right">开始日期</td>
+        <td>
+            <input type="text" name="sdate" id="sdate" value="{{ sdate }}">
+        </td>
+        <td></td>
+    </tr>
+    <tr>
+        <td class="text-right">结束日期</td>
+        <td><input type="text" name="edate" id='edate' value="{{ edate }}" /></td>
+        <td></td>
+    </tr>
+    <tr>
+        <td></td>
+        <td><input type="submit" value="查询"></td>
+        <td></td>
+    </tr>
+    </table>
+  </form>
+
+<h2>账单记录列表</h2>
+    <table class="table table-striped">
+        <tr>
+            <td>收入</td>
+            <td>支出</td>
+            <td></td>
+        </tr>
+        <tr>
+            <td>{{ in_amount }}</td>
+            <td>{{ out_amount }}</td>
+            <td></td>
+        </tr>
+</table>
+{% endblock %}

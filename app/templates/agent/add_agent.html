@@ -1,0 +1,81 @@
+{% extends "base.html" %}
+{% from "macros/_forms.html" import render_errors %}
+
+{% block content %}
+  <h2>添加注册商</h2>
+  <form method="POST" action=''>
+    {{ form.hidden_tag() }}
+    <table class="table table-condensed">
+      <tr>
+      <td class="text-right">{{ form.agent_name.label }}<font color="red">*</font> </td>
+      <td>{{ form.agent_name() }} {{ render_errors(form.agent_name) }}</td>
+      <td></td>
+      </tr>
+      <tr>
+      <td class="text-right">{{ form.password.label }}<font color="red">*</font></td>
+      <td> {{ form.password() }} {{ render_errors(form.password) }}</td>
+      <td></td>
+      </tr>
+      <tr>
+      <td class="text-right">{{ form.comp_name.label }}<font color="red">*</font></td>
+      <td> {{ form.comp_name() }} {{ render_errors(form.comp_name) }}</td>
+      <td></td>
+      </tr>
+      <tr>
+      <td class="text-right">{{ form.email.label }}<font color="red">*</font></td>
+      <td> {{ form.email() }} {{ render_errors(form.email) }}</td>
+      <td></td>
+      </tr>
+      <tr>
+      <td class="text-right">{{ form.phone.label }}<font color="red">*</font></td>
+      <td> {{ form.phone() }} {{ render_errors(form.phone) }}</td>
+      <td></td>
+      </tr>
+      <tr>
+      <td class="text-right">{{ form.balance_remind.label}}<font color="red">*</font></td>
+      <td> {{form.balance_remind() }} {{ render_errors(form.balance_remind)}}</td>
+      <td></td>
+      </tr>
+      <tr>
+      <td class="text-right"> <label for="domain_price_id">域名价格</label><font color="red">*</font></td>
+         <td>
+              <select id="domain_price_id" name="domain_price_id">
+                   {% for domain_price in domain_prices %}
+                       <option value="{{ domain_price.id }}">
+                       {% if domain_price.tpye == 1 %}
+                           {{ domain_price.price|string + '/' + '年'}}
+                       {% else %}
+                           {{ domain_price.price|string + '/' + '月'}}
+                       {% endif %}
+                       </option>
+                   {% endfor %}
+              </select>
+         </td>
+      <td></td>
+      </tr>
+      <tr>
+      <td class="text-right">{{ form.url.label }}<font color="red">*</font> </td>
+      <td>{{ form.url() }} {{ render_errors(form.url) }}</td>
+      <td></td>
+      </tr>
+      <tr>
+      <td class="text-right">{{ form.abuse_email.label }}<font color="red">*</font> </td>
+      <td>{{ form.abuse_email() }} {{ render_errors(form.abuse_email) }}</td>
+      <td></td>
+      </tr>
+      <tr>
+      <td class="text-right">{{ form.abuse_phone.label }} <font color="red">*</font></td>
+      <td>{{ form.abuse_phone() }} {{ render_errors(form.abuse_phone) }}</td>
+      <td></td>
+      </tr>
+      <tr>
+      <td class="text-right"></td>
+      <td><input type="submit" value="完成" class="btn btn-primary" />
+          <a href="/agent/add" class="btn btn-info" >重置</a>
+          </td>
+{#          <input type="reset" value="重置" class="btn btn-info" />#}
+      <td></td>
+      </tr>
+    </table>
+  </form>
+{% endblock %}

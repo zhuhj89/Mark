@@ -1,0 +1,45 @@
+{% extends "base.html" %}
+{% from "macros/_forms.html" import render_errors %}
+
+{% block content %}
+  <h2>更新角色</h2>
+  <form method="POST" action="">
+  {{form.hidden_tag()}}
+  <table class="table table-condensed">
+      <tr>
+          <td class="text-right">{{ form.role_name.label }}<font color="red">*</font></td>
+          <td>{{form.role_name()}} {{render_errors(form.role_name)}}</td>
+          <td></td>
+      </tr>
+      <tr>
+          <td class="text-right">{{ form.role_code.label }}<font color="red">*</font></td>
+          <td>{{form.role_code()}} {{render_errors(form.role_code)}}</td>
+          <td></td>
+      </tr>
+      <tr>
+          <td class="text-right">{{ form.role_desc.label }}</td>
+          <td>{{form.role_desc()}} {{render_errors(form.role_desc)}}</td>
+          <td></td>
+      </tr>
+      <tr>
+          <td class="text-right">创建人</td>
+          <td>{{update_role.creator_obj.username}}</td>
+          <td></td>
+      </tr>
+      <tr>
+          <td class="text-right">创建时间</td>
+          <td>{{update_role.create_date}}</td>
+          <td></td>
+      </tr>
+      <tr>
+          <td></td>
+          <td>
+              <input class="btn btn-info" type="submit" value="添加" >
+              <input class="btn btn-info" type="reset" value="重置" />
+          </td>
+          <td> </td>
+      </tr>
+  </table>
+  </form>
+
+{% endblock %}
